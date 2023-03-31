@@ -13,7 +13,7 @@ function FileAction(props){
                     {
                         actions.map(
                             action => 
-                            <p style={{color: "#000", margin: "0", paddingLeft: "8px", fontSize: "16px", cursor: "pointer"}} onClick={action.handler}>
+                            <p key={action.title} style={{color: "#000", margin: "0", paddingLeft: "8px", fontSize: "16px", cursor: "pointer"}} onClick={action.handler}>
                                 {action.title}
                             </p>
                         )

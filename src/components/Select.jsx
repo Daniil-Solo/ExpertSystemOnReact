@@ -13,7 +13,7 @@ function Select(props){
                     {
                         values.map(
                             value => 
-                            <p style={{margin: "4px 16px", padding: "0"}} onClick={() => handleValue(value)}>
+                            <p key={value} style={{margin: "4px 16px", padding: "0"}} onClick={() => handleValue(value)}>
                                 {value}
                             </p>
                         )
