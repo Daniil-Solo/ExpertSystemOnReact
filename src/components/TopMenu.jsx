@@ -23,7 +23,7 @@ function TopMenu(props) {
             <div style={{width: "878px", margin: "0 auto", display: "flex", justifyContent: "space-around", alignItems: "flex-end"}}>
                 {
                     tabTitles.map(
-                        (tabTitle, index) => <MenuTab title={tabTitle} value={index} isActive={currentTabIndex === index} changeCurrentTabIndex={changeCurrentTabIndex}/>
+                        (tabTitle, index) => <MenuTab key={index} title={tabTitle} value={index} isActive={currentTabIndex === index} changeCurrentTabIndex={changeCurrentTabIndex}/>
                     )
                 }
             </div>
