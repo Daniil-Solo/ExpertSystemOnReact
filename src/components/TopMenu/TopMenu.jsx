@@ -2,20 +2,20 @@ import MenuTab from "./MenuTab";
 import FileAction from "./FileAction";
 
 function TopMenu(props) {
-    const {currentTabIndex, changeCurrentTabIndex} = props;
+    const {currentTabIndex, changeCurrentTabIndex, createNewHandler, openHandler, saveHandler} = props;
     const tabTitles = ["Общая информация", "Правила", "Переменные", "Домены"]
     const actions = [
         {
             title: "Создать...",
-            handler: () => alert("Создаю")
+            handler: createNewHandler
         },
         {
             title: "Открыть...",
-            handler: () => alert("Открываю")
+            handler: openHandler
         },
         {
             title: "Сохранить...",
-            handler: () => alert("Сохраняю")
+            handler: saveHandler
         },
     ]
     return (
