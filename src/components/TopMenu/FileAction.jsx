@@ -9,7 +9,7 @@ function FileAction(props){
                 <img src="document.svg" alt="Документ" />
             </div>
             {isOpenedActionList &&
-                <div style={{position: "absolute", bottom: "-101px", right: "45px", borderBottomLeftRadius: "4px", borderBottomRightRadius: "4px", borderWidth: "1px", borderTopWidth: "0", borderStyle: "solid", backgroundColor: "#FFFFFF", height: "100px", width: "96px", borderColor: "#E6ECF4", display: "flex", flexDirection: "column", justifyContent: "space-around"}} onMouseEnter={() => setIsOpenedActionList(true)} onMouseLeave={() => setIsOpenedActionList(false)}>
+                <div style={{position: "absolute", bottom: "-101px", right: "45px", borderBottomLeftRadius: "4px", borderBottomRightRadius: "4px", borderWidth: "1px", borderTopWidth: "0", borderStyle: "solid", backgroundColor: "#FFFFFF", height: "100px", width: "96px", borderColor: "#E6ECF4", display: "flex", flexDirection: "column", justifyContent: "space-around", zIndex: 3}} onMouseEnter={() => setIsOpenedActionList(true)} onMouseLeave={() => setIsOpenedActionList(false)}>
                     {
                         actions.map(
                             action => 
