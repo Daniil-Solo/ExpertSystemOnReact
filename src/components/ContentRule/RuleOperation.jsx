@@ -1,4 +1,4 @@
-import Select from "./UI/Select";
+import Select from "../UI/Select";
 import React from "react";
 
 function RuleOperation(props){

@@ -1,11 +1,11 @@
-import SimplePanel from "./SimplePanel";
-import Button from "./UI/Button";
-import Input from "./UI/Input";
-import TextArea from "./UI/TextArea";
+import SimplePanel from "../SimplePanel";
+import Button from "../UI/Button";
+import Input from "../UI/Input";
+import TextArea from "../UI/TextArea";
 import RuleOperation from "./RuleOperation"
 import React from "react";
 import { toast } from "react-toastify";
-import ItemList from "./ItemList";
+import ItemList from "../ItemList";
 import RuleItem from "./RuleItem";
 
 function RuleContent(props){
