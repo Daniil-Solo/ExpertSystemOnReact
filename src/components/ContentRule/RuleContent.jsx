@@ -135,7 +135,7 @@ function RuleContent(props){
                     
                 </SimplePanel>
                 <div style={{display: "flex", gap: "24px"}}>
-                    <Button title="Сохранить" buttonType="success" handleClick={saveHandler}/>
+                    <Button title={createMode? "Создать": "Сохранить"} buttonType="success" handleClick={saveHandler}/>
                     {
                         createMode ||
                         <Button title="Удалить" buttonType="danger" handleClick={() => alert("Удалить")}/>
