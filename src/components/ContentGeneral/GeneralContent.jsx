@@ -18,7 +18,7 @@ function GeneralContent(props) {
         <div style={{width: "50%", paddingRight: "12px"}}>
             <SimplePanel title="Текущий проект">
                 <NoEditableProperty title="Название:" value="RESUME.RSS"/>
-                <Select activeValue={goal} options={getGoalOptions} setActiveValue={setGoal}/>
+                <Select title="Цель" activeValue={goal} options={getGoalOptions} setActiveValue={setGoal}/>
                 <NoEditableProperty title="Количество правил:" value={ruleCount}/>
                 <NoEditableProperty title="Количество переменных:" value={variableCount}/>
                 <NoEditableProperty title="Количество доменов:" value={domainCount}/>
