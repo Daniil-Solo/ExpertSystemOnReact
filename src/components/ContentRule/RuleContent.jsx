@@ -48,6 +48,13 @@ function RuleContent(props){
             toast.success(`Правило ${name} было успешно изменено!`);
         }
     }
+    const deleteHandler = () => {
+        setRules([...rules.slice(0, selectedItem), ...rules.slice(selectedItem+1)]);
+        toast.success(`Правило ${name} было успешно удалено!`);
+        clearFields();
+        setCreateMode(true);
+        setSelectedItem(-1);
+    }
     const ruleIsValid = () => {
         if (!name){
             toast.error("Для сохранения правила необходимо заполнить поле Название");
@@ -138,7 +145,7 @@ function RuleContent(props){
                     <Button title={createMode? "Создать": "Сохранить"} buttonType="success" handleClick={saveHandler}/>
                     {
                         createMode ||
-                        <Button title="Удалить" buttonType="danger" handleClick={() => alert("Удалить")}/>
+                        <Button title="Удалить" buttonType="danger" handleClick={deleteHandler}/>
                     }
                 </div>
             </div>
