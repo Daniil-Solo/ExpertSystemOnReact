@@ -1,12 +1,12 @@
 import Button from "../Button";
 import "./modal.css"
 function Modal(props){
-    const {isActive, setIsActive, addElement, title, children} = props;
+    const {isActive, setIsActive, addElement, title, children, zIndex=2} = props;
     const closeModal = () => {
         setIsActive(false);
     }
     return (
-        <div className={isActive? "modal active": "modal"} onClick={closeModal}>
+        <div className={isActive? "modal active": "modal"} onClick={closeModal} style={{zIndex: zIndex}}>
             <div className={isActive? "modal__content active": "modal__content"} onClick={e => e.stopPropagation()}>
                 <p className="modal__header">
                     {title}

@@ -20,7 +20,9 @@
 .modal__content{
     background-color: #FFFFFF;
     min-width: 200px;
+    max-width: 600px;
     min-height: 200px;
+    max-height: 500px;
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -29,6 +31,7 @@
     transform: scale(0.5);
     transition: 0.5s;
     padding: 16px;
+    overflow-y: auto;
 }
 .modal__content.active{
     transform: scale(1);
@@ -40,6 +43,8 @@
 }
 .modal__header{
     text-align: center;
+    margin-top: 0;
+    margin-bottom: 24px;
 }
 .modal__body{
     display: flex;
