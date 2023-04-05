@@ -2,23 +2,28 @@ import React from "react";
 import SimplePanel from "../SimplePanel";
 import NoEditableProperty from "../UI/NoEditableProperty";
 import Select from "../UI/Select";
+import VariableModal from "../modals/VariableModal";
 
 function GeneralContent(props) {
-  const {goal, setGoal, variables, variableCount, ruleCount, domainCount} = props;
-
+  const {goal, setGoal, setDomains, variables, variableCount, ruleCount, domainCount, domains} = props;
+  const [isVariableOpenModal, setIsVariableOpenModal] = React.useState(false);
   const getGoalOptions = variables.map(variable => {
       return {
         label: variable.label,
         value: variable.name
       }
   });
+  const addVariable = (newVariable) => {
+    setGoal(newVariable.name, [...variables, newVariable]);
+  }
 
   return (
-    <div style={{width: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
+    <>
+      <VariableModal domains={domains} setDomains={setDomains} isActive={isVariableOpenModal} setIsActive={setIsVariableOpenModal} addVariable={addVariable}/>
+      <div style={{width: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
         <div style={{width: "50%", paddingRight: "12px"}}>
             <SimplePanel title="Текущий проект">
-                <NoEditableProperty title="Название:" value="RESUME.RSS"/>
-                <Select title="Цель" activeValue={goal} options={getGoalOptions} setActiveValue={setGoal}/>
+                <Select title="Цель" activeValue={goal} options={getGoalOptions} setActiveValue={setGoal} addNewElement={() => setIsVariableOpenModal(true)}/>
                 <NoEditableProperty title="Количество правил:" value={ruleCount}/>
                 <NoEditableProperty title="Количество переменных:" value={variableCount}/>
                 <NoEditableProperty title="Количество доменов:" value={domainCount}/>
@@ -26,7 +31,9 @@ function GeneralContent(props) {
         </div>
         <div style={{width: "50%", paddingLeft: "12px"}}>
         </div>
-    </div>
+      </div>
+    </>
+    
   );
 }
 
