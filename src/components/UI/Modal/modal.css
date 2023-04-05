@@ -28,6 +28,7 @@
     position: relative;
     transform: scale(0.5);
     transition: 0.5s;
+    padding: 16px;
 }
 .modal__content.active{
     transform: scale(1);
@@ -43,9 +44,10 @@
 .modal__body{
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
 }
 .modal__footer{
+    margin-top: 16px;
     display: flex;
     justify-content: space-around;
     align-items: center;
