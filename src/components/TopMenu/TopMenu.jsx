@@ -19,8 +19,8 @@ function TopMenu(props) {
         },
     ]
     return (
-        <div style={{backgroundColor: "#64B5F6", height: "64px", margin: "0", padding: "0", display: "flex", flexDirection: "column", justifyContent: "flex-end", position: "relative"}}> 
-            <div style={{width: "878px", margin: "0 auto", display: "flex", justifyContent: "space-around", alignItems: "flex-end"}}>
+        <div style={{backgroundColor: "#64B5F6", height: "64px", margin: "0", padding: "0", display: "flex", justifyContent: "space-around", alignItems: "end", margin: "0"}}> 
+            <div style={{width: "788", margin: "0 auto", display: "flex", justifyContent: "space-between"}}>
                 {
                     tabTitles.map(
                         (tabTitle, index) => <MenuTab key={index} title={tabTitle} value={index} isActive={currentTabIndex === index} changeCurrentTabIndex={changeCurrentTabIndex}/>
