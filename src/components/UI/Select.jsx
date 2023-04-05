@@ -1,7 +1,7 @@
 import React from "react";
 
 function Select(props){
-    const {activeValue, setActiveValue, options, title} = props;
+    const {activeValue, setActiveValue, options, title, addNewElement} = props;
     const [isOpenedList, setIsOpenedList] = React.useState(false);
     const activeOption = options.find(option => option.value === activeValue);
     const activeLabel = activeOption? activeOption.label: "Выбрать";
@@ -21,6 +21,12 @@ function Select(props){
             {
                 isOpenedList &&
                 <div style={{position: "absolute", top: "24px", right: "-1px", width: "100%", backgroundColor: "#FFFFFF", color: "#000000", borderRadius: "4px", borderWidth: "1px", borderStyle: "solid", borderColor: "#E6ECF4", display: "flex", flexDirection: "column", gap: "4px", zIndex: 3}} onMouseLeave={() => setIsOpenedList(false)}>
+                    {
+                        addNewElement && 
+                        <p style={{margin: "4px 16px", padding: "0"}} onClick={addNewElement}>
+                            Добавить новый
+                        </p>
+                    }
                     {
                         options.map(
                             option => 
