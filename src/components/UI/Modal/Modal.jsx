@@ -5,10 +5,6 @@ function Modal(props){
     const closeModal = () => {
         setIsActive(false);
     }
-    const addElementAndClose = () => {
-        addElement();
-        closeModal();
-    }
     return (
         <div className={isActive? "modal active": "modal"} onClick={closeModal}>
             <div className={isActive? "modal__content active": "modal__content"} onClick={e => e.stopPropagation()}>
@@ -20,7 +16,7 @@ function Modal(props){
                     {children}
                 </div>
                 <div className="modal__footer">
-                    <Button title="Добавить" handleClick={addElementAndClose} buttonType="success"/>
+                    <Button title="Добавить" handleClick={addElement} buttonType="success"/>
                     <Button title="Отмена" handleClick={closeModal} buttonType="danger"/>
                 </div>
             </div>
