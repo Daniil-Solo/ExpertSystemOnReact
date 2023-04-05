@@ -9,7 +9,7 @@ import ItemList from "../ItemList";
 import RuleItem from "./RuleItem";
 
 function RuleContent(props){
-    const {rules, setRules, variables, domains} = props;
+    const {rules, setRules, variables, setVariables, domains, setDomains} = props;
     const [name, setName] = React.useState("");
     const [reason, setReason] = React.useState("");
     const [conditions, setConditions] = React.useState([]);
@@ -129,14 +129,14 @@ function RuleContent(props){
                     {
                         conditions.map(
                             (condition, index) => 
-                            <RuleOperation key={index} activeVariable={condition.variable} variables={variables} setVariable={variableName => setConditionVariable(variableName, index)} activeDomainValue={condition.value} domains={domains} setDomainValue={domainValue => setConditionValue(domainValue, index)} handleDelete={() => deleteCondition(index)}/>
+                            <RuleOperation key={index} activeVariable={condition.variable} variables={variables} setVariable={variableName => setConditionVariable(variableName, index)} activeDomainValue={condition.value} domains={domains} setDomainValue={domainValue => setConditionValue(domainValue, index)} handleDelete={() => deleteCondition(index)} setVariables={setVariables} setDomains={setDomains}/>
                         )
                     }
                 </SimplePanel>
                 <SimplePanel title="Заключение">
                     {
                         result
-                        ? <RuleOperation activeVariable={result.variable} variables={variables} setVariable={variableName => setResultVariable(variableName)} activeDomainValue={result.value} domains={domains} setDomainValue={domainValue => setResultValue(domainValue)} handleDelete={deleteResult}/>
+                        ? <RuleOperation activeVariable={result.variable} variables={variables} setVariable={variableName => setResultVariable(variableName)} activeDomainValue={result.value} domains={domains} setDomainValue={domainValue => setResultValue(domainValue)} handleDelete={deleteResult} setVariables={setVariables} setDomains={setDomains}/>
                         : <Button title="Создать заключение" handleClick={addResult}/>
                     }
                     
