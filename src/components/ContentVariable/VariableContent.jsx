@@ -7,9 +7,10 @@ import ItemList from "../ItemList";
 import VariableItem from "./VariableItem";
 import Select from "../UI/Select";
 import {VariableTypes} from "../../utils/constants/VariableTypes"
+import DomainModal from "../modals/DomainModal";
 
 function VariableContent(props){
-    const {variables, setVariables, rules, domains} = props;
+    const {variables, setVariables, domains, setDomains} = props;
     const [label, setLabel] = React.useState("");
     const [name, setName] = React.useState("");
     const [type, setType] = React.useState(null);
@@ -87,29 +88,39 @@ function VariableContent(props){
         }
     })
 
-    return (
-        <div style={{width: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
-            <div style={{width: "50%", paddingRight: "12px"}}>
-                <SimplePanel title="Список переменных">
-                    <Button title="Создать новую переменную" handleClick={createNewVariable}/>
-                    <ItemList items={variables} selectItem={item => selectVariable(item)} SpecificItem={VariableItem}  selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
-                </SimplePanel>
-            </div>
-            <div style={{width: "50%", paddingLeft: "12px", display: "flex", flexDirection: "column", gap: "24px"}}>
-                <Input title="Название" value={label} changeValue={setLabel}/>
-                <Input title="Короткое название" value={name} changeValue={setName}/>
-                <Select title="Тип" activeValue={type} setActiveValue={setType} options={VariableTypes}/>
-                <Select title="Домен" activeValue={domain} setActiveValue={setDomain} options={domainOptions}/>
+    const [isDomainOpenModal, setIsDomainOpenModal] = React.useState(false);
+    const addDomain = (newDomain) => {
+        setDomains([...domains, newDomain]);
+        setDomain(newDomain.name);
+    }
 
-                <div style={{display: "flex", gap: "24px"}}>
-                    <Button title={createMode? "Создать": "Сохранить"} buttonType="success" handleClick={saveHandler}/>
-                    {
-                        createMode ||
-                        <Button title="Удалить" buttonType="danger" handleClick={deleteHandler}/>
-                    }
+    return (
+        <>
+            <DomainModal isActive={isDomainOpenModal} setIsActive={setIsDomainOpenModal} addDomain={addDomain}/>
+            <div style={{width: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
+                <div style={{width: "50%", paddingRight: "12px"}}>
+                    <SimplePanel title="Список переменных">
+                        <Button title="Создать новую переменную" handleClick={createNewVariable}/>
+                        <ItemList items={variables} selectItem={item => selectVariable(item)} SpecificItem={VariableItem}  selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
+                    </SimplePanel>
+                </div>
+                <div style={{width: "50%", paddingLeft: "12px", display: "flex", flexDirection: "column", gap: "24px"}}>
+                    <Input title="Название" value={label} changeValue={setLabel}/>
+                    <Input title="Короткое название" value={name} changeValue={setName}/>
+                    <Select title="Тип" activeValue={type} setActiveValue={setType} options={VariableTypes}/>
+                    <Select title="Домен" activeValue={domain} setActiveValue={setDomain} options={domainOptions} addNewElement={() => setIsDomainOpenModal(true)}/>
+
+                    <div style={{display: "flex", gap: "24px"}}>
+                        <Button title={createMode? "Создать": "Сохранить"} buttonType="success" handleClick={saveHandler}/>
+                        {
+                            createMode ||
+                            <Button title="Удалить" buttonType="danger" handleClick={deleteHandler}/>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
+        
       );
 }
 
