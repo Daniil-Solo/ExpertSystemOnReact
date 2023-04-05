@@ -12,7 +12,7 @@ function App() {
   const expertSystemInstance = new ExpertSystem();
 
   const [expertSystem, setExpertSystem] = React.useState(expertSystemInstance.getData());
-  const [currentTabIndex, setCurrentTabIndex] = React.useState(1);
+  const [currentTabIndex, setCurrentTabIndex] = React.useState(0);
 
   const createNewHandler = () => {
     expertSystemInstance.createKnowledgeBase();
@@ -27,8 +27,11 @@ function App() {
     expertSystemInstance.saveKnowledgeBase("");
   }
 
-  const setGoal = (newGoal) => {
-    setExpertSystem({...expertSystem, goal: newGoal});
+  const setGoal = (newGoal, updatedVariables) => {
+    if (updatedVariables)
+      setExpertSystem({...expertSystem, goal: newGoal, variables: updatedVariables});
+    else
+      setExpertSystem({...expertSystem, goal: newGoal});
   }
   const setRules = (newRules) => {
     setExpertSystem({...expertSystem, rules: newRules});
@@ -53,7 +56,7 @@ function App() {
       <TopMenu currentTabIndex={currentTabIndex} changeCurrentTabIndex={setCurrentTabIndex} createNewHandler={createNewHandler} openHandler={openHandler} saveHandler={saveHandler}/>
       {
         currentTabIndex === 0 &&
-        <GeneralContent goal={expertSystem.goal} setGoal={setGoal} variables={expertSystem.variables} variableCount={expertSystem.variables.length} domainCount={expertSystem.domains.length} ruleCount={expertSystem.rules.length}/>
+        <GeneralContent goal={expertSystem.goal} setGoal={setGoal} setDomains={setDomains} variables={expertSystem.variables} variableCount={expertSystem.variables.length} domainCount={expertSystem.domains.length} ruleCount={expertSystem.rules.length} domains={expertSystem.domains}/>
       }
       {
         currentTabIndex === 1 &&
