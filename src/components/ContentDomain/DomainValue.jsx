@@ -6,7 +6,7 @@ function DomainValue(props){
         <div style={{borderWidth: "1px", borderStyle: "solid", backgroundColor: "#FFFFFF", borderColor: "#E6ECF4", borderRadius: "4px", padding: "12px 16px", display: "flex", flexDirection: "row", gap: "16px"}}>
             <div style={{flex: "1 1 auto", display: "flex", gap: "4px", alignItems: "center"}}>
                 <Input title="Название" value={label} changeValue={setLabel}/>
-                <Input title="Значение" value={value} changeValue={setValue}/>
+                <Input title="Значение" value={value} changeValue={setValue} type="number"/>
             </div>
             <img style={{cursor: "pointer"}} src="delete.svg" alt="" onClick={handleDelete} />
         </div>
