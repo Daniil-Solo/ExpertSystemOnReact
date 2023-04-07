@@ -14,7 +14,7 @@ function VariableContent(props){
     const [label, setLabel] = React.useState("");
     const [name, setName] = React.useState("");
     const [type, setType] = React.useState(null);
-    const [domain, setDomain] = React.useState(null);
+    const [domainId, setDomainId] = React.useState(null);
 
     const [selectedItem, setSelectedItem] = React.useState(-1);
     const [createMode, setCreateMode] = React.useState(true);
@@ -23,14 +23,14 @@ function VariableContent(props){
         setLabel("");
         setName("");
         setType(null);
-        setDomain(null);
+        setDomainId(null);
     }
     const createNewVariable = () => {
         clearFields();
         setCreateMode(true);
     }
     const saveHandler = () => {
-        const newVariable = {label, name, type, domain}
+        const newVariable = {label, name, type, domainId}
         if (createMode){
             if (!variableIsValid()){
                 return
@@ -43,7 +43,7 @@ function VariableContent(props){
             clearFields();
         } else {
             const newVariables = JSON.parse(JSON.stringify(variables));
-            newVariables[selectedItem] = newVariable;
+            newVariables[selectedItem] = {...newVariables[selectedItem], ...newVariable};
             setVariables(newVariables);
             toast.success(`Переменная ${label} была успешно изменена!`);
         }
@@ -65,7 +65,7 @@ function VariableContent(props){
         } else if (!type){
             toast.error("Для сохранения переменной необходимо заполнить поле Тип переменной");
             return false;
-        } else if (!domain){
+        } else if (domainId === null){
             toast.error("Для сохранения переменной необходимо заполнить поле Домен");
             return false;
         } else{
@@ -77,21 +77,21 @@ function VariableContent(props){
         setLabel(variable.label);
         setName(variable.name);
         setType(variable.type);
-        setDomain(variable.domain);
+        setDomainId(variable.domainId);
         setCreateMode(false);
     }
 
     const domainOptions = domains.map(domain => {
         return {
             label: domain.name,
-            value: domain.name
+            value: domain.id
         }
     })
 
     const [isDomainOpenModal, setIsDomainOpenModal] = React.useState(false);
     const addDomain = (newDomain) => {
         setDomains([...domains, newDomain]);
-        setDomain(newDomain.name);
+        setDomainId(newDomain.id);
     }
 
     return (
@@ -101,14 +101,14 @@ function VariableContent(props){
                 <div style={{width: "50%", paddingRight: "12px"}}>
                     <SimplePanel title="Список переменных">
                         <Button title="Создать новую переменную" handleClick={createNewVariable}/>
-                        <ItemList items={variables} selectItem={item => selectVariable(item)} SpecificItem={VariableItem}  selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
+                        <ItemList items={variables} domains={domains} selectItem={item => selectVariable(item)} SpecificItem={VariableItem}  selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
                     </SimplePanel>
                 </div>
                 <div style={{width: "50%", paddingLeft: "12px", display: "flex", flexDirection: "column", gap: "24px"}}>
                     <Input title="Название" value={label} changeValue={setLabel}/>
                     <Input title="Короткое название" value={name} changeValue={setName}/>
                     <Select title="Тип" activeValue={type} setActiveValue={setType} options={VariableTypes}/>
-                    <Select title="Домен" activeValue={domain} setActiveValue={setDomain} options={domainOptions} addNewElement={() => setIsDomainOpenModal(true)}/>
+                    <Select title="Домен" activeValue={domainId} setActiveValue={setDomainId} options={domainOptions} addNewElement={() => setIsDomainOpenModal(true)}/>
 
                     <div style={{display: "flex", gap: "24px"}}>
                         <Button title={createMode? "Создать": "Сохранить"} buttonType="success" handleClick={saveHandler}/>

@@ -55,14 +55,12 @@ function App() {
     setExpertSystem({...expertSystem, rules: newRules});
   }
   const setVariables = (newVariables) => {
-    if (newVariables.length > expertSystem.variables.length){ // добавление новой переменной
-      newVariables.forEach((newVariable, index) => {
-        if (newVariable.id === undefined){
-          newVariables[index].id = getNextIdForItems(newVariables);
-        }
-      });
-      setExpertSystem({...expertSystem, variables: newVariables});
-    }
+    newVariables.forEach((newVariable, index) => {
+      if (newVariable.id === undefined){
+        newVariables[index].id = getNextIdForItems(newVariables);
+      }
+    });
+    setExpertSystem({...expertSystem, variables: newVariables});
   }
   const setDomains = (newDomains) => {
     // добавление нового домена

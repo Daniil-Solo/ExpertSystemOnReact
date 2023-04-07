@@ -12,7 +12,7 @@ function VariableModal(props){
     const [label, setLabel] = React.useState("");
     const [name, setName] = React.useState("");
     const [type, setType] = React.useState(null);
-    const [domain, setDomain] = React.useState(null);
+    const [domainId, setDomainId] = React.useState(null);
 
     const [isDomainOpenModal, setIsDomainOpenModal] = React.useState(false);
 
@@ -25,12 +25,12 @@ function VariableModal(props){
     const addElementInner = () => {
         if (!variableIsValid())
             return;
-        const newVariable = {label, name, type, domain};
+        const newVariable = {label, name, type, domainId};
         addVariable(newVariable);
         setIsActive(false);
         setName("");
         setLabel("");
-        setDomain(null);
+        setDomainId(null);
         setType(null);
     }
 
@@ -44,7 +44,7 @@ function VariableModal(props){
         } else if (!type){
             toast.error("Для сохранения переменной необходимо заполнить поле Тип переменной");
             return false;
-        } else if (domain === null){
+        } else if (domainId === null){
             toast.error("Для сохранения переменной необходимо заполнить поле Домен");
             return false;
         } else{
@@ -54,7 +54,7 @@ function VariableModal(props){
 
     const addDomain = (newDomain) => {
         setDomains([...domains, newDomain]);
-        setDomain(newDomain.id);
+        setDomainId(newDomain.id);
     }
 
     return (
@@ -64,7 +64,7 @@ function VariableModal(props){
                 <Input title="Название" value={label} changeValue={setLabel}/>
                 <Input title="Короткое название" value={name} changeValue={setName}/>
                 <Select title="Тип" activeValue={type} setActiveValue={setType} options={VariableTypes}/>
-                <Select title="Домен" activeValue={domain} setActiveValue={setDomain} options={domainOptions} addNewElement={() => setIsDomainOpenModal(true)}/>
+                <Select title="Домен" activeValue={domainId} setActiveValue={setDomainId} options={domainOptions} addNewElement={() => setIsDomainOpenModal(true)}/>
             </Modal>
         </>
         
