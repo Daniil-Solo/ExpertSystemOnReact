@@ -51,11 +51,15 @@ function VariableContent(props){
         }
     }
     const deleteHandler = () => {
-        setVariables([...variables.slice(0, selectedItem), ...variables.slice(selectedItem+1)]);
-        toast.success(`Переменная ${label} была успешно удалена!`);
-        clearFields();
-        setCreateMode(true);
-        setSelectedItem(-1);
+        if (variableRuleNames.length){
+            toast.error("Переменная используется для правила!");
+        } else {
+            setVariables([...variables.slice(0, selectedItem), ...variables.slice(selectedItem+1)]);
+            toast.success(`Переменная ${label} была успешно удалена!`);
+            clearFields();
+            setCreateMode(true);
+            setSelectedItem(-1);
+        }
     }
     const variableIsValid = () => {
         if (!label){
