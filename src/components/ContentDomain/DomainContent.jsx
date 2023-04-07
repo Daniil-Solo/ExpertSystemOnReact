@@ -1,6 +1,7 @@
 import SimplePanel from "../SimplePanel";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
+import NoEditableProperty from "../UI/NoEditableProperty";
 import React from "react";
 import { toast } from "react-toastify";
 import ItemList from "../ItemList";
@@ -8,7 +9,7 @@ import DomainItem from "./DomainItem";
 import DomainValue from "./DomainValue";
 
 function DomainContent(props){
-    const {domains, setDomains} = props;
+    const {domains, setDomains, variables, rules} = props;
     const [name, setName] = React.useState("");
     const [domainValues, setDomainValues] = React.useState([]);
 
@@ -103,7 +104,27 @@ function DomainContent(props){
                         )
                     }
                 </SimplePanel>
-
+                {
+                    createMode ||
+                    <SimplePanel title="Где используется">
+                        <NoEditableProperty title="Переменные:" value={variables.map(variable => variable.label).join(", ")}/>
+                        {
+                            domainValues.map((domainValue, index) => (
+                                <NoEditableProperty key={index} title={"Значение \"" + domainValue.label + "\":"} value={rules.map(rule => {
+                                    const ruleVariables = [rule.result, ...rule.conditions];
+                                    const ruleVariableDomainValues = ruleVariables.map(ruleVariable => ruleVariable.valueId);
+                                    const domainValueId = domainValue.id;
+                                    if (ruleVariableDomainValues.includes(domainValueId)){
+                                        return rule.name;
+                                    } else{
+                                        return null;
+                                    }
+                                }).filter(item => item !== null).join(", ") || "не используется"}/>
+                            ))
+                        }
+                    </SimplePanel>
+                }
+                
                 <div style={{display: "flex", gap: "24px"}}>
                     <Button title={createMode? "Создать": "Сохранить"} buttonType="success" handleClick={saveHandler}/>
                     {

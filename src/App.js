@@ -105,7 +105,7 @@ function App() {
       }
       {
         currentTabIndex === 3 &&
-        <DomainContent domains={expertSystem.domains} setDomains={setDomains}/>
+        <DomainContent domains={expertSystem.domains} setDomains={setDomains} variables={expertSystem.variables} rules={expertSystem.rules}/>
       }
     </>
   );
