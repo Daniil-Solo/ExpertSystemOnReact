@@ -2,7 +2,7 @@ import TopMenu from "./components/TopMenu/TopMenu";
 import React from "react";
 import GeneralContent from "./components/ContentGeneral/GeneralContent";
 import RuleContent from "./components/ContentRule/RuleContent";
-import {ExpertSystem} from "./utils/ExpertSystem";
+import {ExpertSystem} from "./utils/classes/ExpertSystem";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import VariableContent from "./components/ContentVariable/VariableContent";
@@ -60,11 +60,11 @@ function App() {
       }
       {
         currentTabIndex === 1 &&
-        <RuleContent rules={expertSystem.rules} setRules={setRules} variables={expertSystem.variables} domains={expertSystem.domains}/>
+        <RuleContent rules={expertSystem.rules} setRules={setRules} variables={expertSystem.variables} domains={expertSystem.domains} setVariables={setVariables} setDomains={setDomains}/>
       }
       {
         currentTabIndex === 2 &&
-        <VariableContent rules={expertSystem.rules} variables={expertSystem.variables} setVariables={setVariables} domains={expertSystem.domains}/>
+        <VariableContent rules={expertSystem.rules} variables={expertSystem.variables} setVariables={setVariables} domains={expertSystem.domains} setDomains={setDomains}/>
       }
       {
         currentTabIndex === 3 &&
