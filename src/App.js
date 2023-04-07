@@ -65,14 +65,18 @@ function App() {
     }
   }
   const setDomains = (newDomains) => {
-    if (newDomains.length > expertSystem.domains.length){ // добавление нового домена
-      newDomains.forEach((newDomain, index) => {
-        if (newDomain.id === undefined){
-          newDomains[index].id = getNextIdForItems(newDomains);
-        }
-      });
-      setExpertSystem({...expertSystem, domains: newDomains});
-    }
+    // добавление нового домена
+    newDomains.forEach((newDomain, index) => {
+      if (newDomain.id === undefined){
+        newDomains[index].id = getNextIdForItems(newDomains);
+        newDomains[index].domainValues.forEach((newDomainValue, innerIndex) => {
+          if (newDomainValue.id === undefined){
+            newDomains[index].domainValues[innerIndex].id = newDomains[index].id + "_" + getNextIdForItems(newDomains[index].domainValues);
+          }
+        })
+      }
+    });
+    setExpertSystem({...expertSystem, domains: newDomains});
   }
   return (
     <>

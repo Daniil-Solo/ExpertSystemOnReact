@@ -37,7 +37,7 @@ function DomainContent(props){
             clearFields();
         } else {
             const newDomains = JSON.parse(JSON.stringify(domains));
-            newDomains[selectedItem] = newDomain;
+            newDomains[selectedItem] = {...newDomains[selectedItem], ...newDomain};
             setDomains(newDomains);
             toast.success(`Домен ${name} был успешно изменен!`);
         }
