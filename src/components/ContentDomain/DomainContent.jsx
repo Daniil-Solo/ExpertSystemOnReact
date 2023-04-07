@@ -44,11 +44,15 @@ function DomainContent(props){
         }
     }
     const deleteHandler = () => {
-        setDomains([...domains.slice(0, selectedItem), ...domains.slice(selectedItem+1)]);
-        toast.success(`Домен ${name} был успешно удален!`);
-        clearFields();
-        setCreateMode(true);
-        setSelectedItem(-1);
+        if (variables.map(variable => variable.label).length){
+            toast.error("Домен используется для переменной!");
+        } else {
+            setDomains([...domains.slice(0, selectedItem), ...domains.slice(selectedItem+1)]);
+            toast.success(`Домен ${name} был успешно удален!`);
+            clearFields();
+            setCreateMode(true);
+            setSelectedItem(-1);
+        }
     }
     const domainIsValid = () => {
         if (!name){
@@ -63,6 +67,17 @@ function DomainContent(props){
     }
     const selectDomain = (domain) => {
         setName(domain.name);
+        domain.domainValues.forEach((domainValue, index) => {
+            domain.domainValues[index].rules = rules.map(rule => {
+                const ruleVariables = [rule.result, ...rule.conditions];
+                const ruleVariableDomainValues = ruleVariables.map(ruleVariable => ruleVariable.valueId);
+                if (ruleVariableDomainValues.includes(domainValue.id)){
+                    return rule.name;
+                } else {
+                    return null;
+                }
+            }).filter(item => item !== null);
+        })
         setDomainValues(domain.domainValues);
         setCreateMode(false);
     }
@@ -81,8 +96,12 @@ function DomainContent(props){
         setDomainValues(newDomainValues);
     }
     const deleteDomainValue = (domainValueIndex) => {
-        const newDomainValues = domainValues.filter((_, index) => index !== domainValueIndex)
-        setDomainValues(newDomainValues);
+        if (domainValues[domainValueIndex].rules !== undefined && domainValues[domainValueIndex].rules.length){
+            toast.error("Значение домена участвует в правиле!");
+        } else {
+            const newDomainValues = domainValues.filter((_, index) => index !== domainValueIndex)
+            setDomainValues(newDomainValues);
+        }
     }
 
     return (
@@ -110,16 +129,7 @@ function DomainContent(props){
                         <NoEditableProperty title="Переменные:" value={variables.map(variable => variable.label).join(", ")}/>
                         {
                             domainValues.map((domainValue, index) => (
-                                <NoEditableProperty key={index} title={"Значение \"" + domainValue.label + "\":"} value={rules.map(rule => {
-                                    const ruleVariables = [rule.result, ...rule.conditions];
-                                    const ruleVariableDomainValues = ruleVariables.map(ruleVariable => ruleVariable.valueId);
-                                    const domainValueId = domainValue.id;
-                                    if (ruleVariableDomainValues.includes(domainValueId)){
-                                        return rule.name;
-                                    } else{
-                                        return null;
-                                    }
-                                }).filter(item => item !== null).join(", ") || "не используется"}/>
+                                <NoEditableProperty key={index} title={"Значение \"" + domainValue.label + "\":"} value={domainValue.rules !== undefined && domainValue.rules.length? domainValue.rules.join(", "): "не используется"}/>
                             ))
                         }
                     </SimplePanel>
