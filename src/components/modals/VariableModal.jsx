@@ -19,7 +19,7 @@ function VariableModal(props){
     const domainOptions = domains.map(domain => {
         return {
             label: domain.name,
-            value: domain.name
+            value: domain.id
         }
     })
     const addElementInner = () => {
@@ -44,7 +44,7 @@ function VariableModal(props){
         } else if (!type){
             toast.error("Для сохранения переменной необходимо заполнить поле Тип переменной");
             return false;
-        } else if (!domain){
+        } else if (domain === null){
             toast.error("Для сохранения переменной необходимо заполнить поле Домен");
             return false;
         } else{
@@ -54,7 +54,7 @@ function VariableModal(props){
 
     const addDomain = (newDomain) => {
         setDomains([...domains, newDomain]);
-        setDomain(newDomain.name);
+        setDomain(newDomain.id);
     }
 
     return (

@@ -10,11 +10,11 @@ function GeneralContent(props) {
   const getGoalOptions = variables.map(variable => {
       return {
         label: variable.label,
-        value: variable.name
+        value: variable.id
       }
   });
   const addVariable = (newVariable) => {
-    setGoal(newVariable.name, [...variables, newVariable]);
+    setGoal(newVariable.id, [...variables, newVariable]);
   }
 
   return (

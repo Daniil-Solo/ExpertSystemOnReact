@@ -27,20 +27,52 @@ function App() {
     expertSystemInstance.saveKnowledgeBase("");
   }
 
-  const setGoal = (newGoal, updatedVariables) => {
-    if (updatedVariables)
-      setExpertSystem({...expertSystem, goal: newGoal, variables: updatedVariables});
-    else
-      setExpertSystem({...expertSystem, goal: newGoal});
+  const getNextIdForItems = (items) => {
+    let maxId = -1;
+    items.forEach(item => {
+      if (item.id !== undefined){
+        maxId = item.id > maxId? item.id: maxId;
+      }
+    })
+    const nextId = maxId + 1
+    return nextId;
+  }
+
+  const setGoal = (newGoalId, newVariables) => {
+    if (newVariables){ // добавление новой переменной как цели
+      newVariables.forEach((newVariable, index) => {
+        if (newVariable.id === undefined){
+          newGoalId = getNextIdForItems(newVariables);
+          newVariables[index].id = newGoalId;
+        }
+      });
+      setExpertSystem({...expertSystem, goalId: newGoalId, variables: newVariables});
+    } else{ // обновление при существующей переменной
+      setExpertSystem({...expertSystem, goalId: newGoalId});
+    }
   }
   const setRules = (newRules) => {
     setExpertSystem({...expertSystem, rules: newRules});
   }
   const setVariables = (newVariables) => {
-    setExpertSystem({...expertSystem, variables: newVariables});
+    if (newVariables.length > expertSystem.variables.length){ // добавление новой переменной
+      newVariables.forEach((newVariable, index) => {
+        if (newVariable.id === undefined){
+          newVariables[index].id = getNextIdForItems(newVariables);
+        }
+      });
+      setExpertSystem({...expertSystem, variables: newVariables});
+    }
   }
   const setDomains = (newDomains) => {
-    setExpertSystem({...expertSystem, domains: newDomains});
+    if (newDomains.length > expertSystem.domains.length){ // добавление нового домена
+      newDomains.forEach((newDomain, index) => {
+        if (newDomain.id === undefined){
+          newDomains[index].id = getNextIdForItems(newDomains);
+        }
+      });
+      setExpertSystem({...expertSystem, domains: newDomains});
+    }
   }
   return (
     <>
@@ -56,7 +88,7 @@ function App() {
       <TopMenu currentTabIndex={currentTabIndex} changeCurrentTabIndex={setCurrentTabIndex} createNewHandler={createNewHandler} openHandler={openHandler} saveHandler={saveHandler}/>
       {
         currentTabIndex === 0 &&
-        <GeneralContent goal={expertSystem.goal} setGoal={setGoal} setDomains={setDomains} variables={expertSystem.variables} variableCount={expertSystem.variables.length} domainCount={expertSystem.domains.length} ruleCount={expertSystem.rules.length} domains={expertSystem.domains}/>
+        <GeneralContent goal={expertSystem.goalId} setGoal={setGoal} setDomains={setDomains} variables={expertSystem.variables} variableCount={expertSystem.variables.length} domainCount={expertSystem.domains.length} ruleCount={expertSystem.rules.length} domains={expertSystem.domains}/>
       }
       {
         currentTabIndex === 1 &&
