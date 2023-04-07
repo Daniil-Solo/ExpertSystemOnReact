@@ -140,12 +140,7 @@ class ExpertSystem{
     }
 
     getData(){
-        return {
-            rules: this.knowledgeBase.rules.map(rule => rule.getData()),
-            domains: this.knowledgeBase.domains.map(domain => domain.getData()),
-            variables: this.knowledgeBase.variables.map(variable => variable.getData()),
-            goal:  this.knowledgeBase.goal? this.knowledgeBase.goal.id: this.knowledgeBase.goal
-        }
+        return this.knowledgeBase.getData();
     }
 }
 

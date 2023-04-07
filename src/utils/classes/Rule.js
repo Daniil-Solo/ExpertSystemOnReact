@@ -42,8 +42,8 @@ class RuleOperation{
 
     getData(){
         return {
-            variable: this.variable.id,
-            value: this.value.id
+            variableId: this.variable.id,
+            valueId: this.value.id
         }
     }
 

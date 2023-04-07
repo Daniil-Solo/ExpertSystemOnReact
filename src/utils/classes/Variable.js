@@ -12,7 +12,7 @@ class Variable{
             id: this.id,
             name: this.name,
             label: this.label,
-            domain: this.domain.id,
+            domainId: this.domain.id,
             type: this.type
         }
     }

@@ -60,6 +60,15 @@ class KnowledgeBase{
         return this.goal? this.goal.label: "Цель не определена"; 
     }
 
+    // KnowledgeBase
+    getData(){
+        return {
+            rules: this.rules.map(rule => rule.getData()),
+            domains: this.domains.map(domain => domain.getData()),
+            variables: this.variables.map(variable => variable.getData()),
+            goalId:  this.goal? this.goal.id: this.goal
+        }
+    }
 }
 
 export {KnowledgeBase};
