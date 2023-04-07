@@ -8,20 +8,20 @@ function RuleOperation(props){
     const variableOptions = variables.map(variable => {
         return {
           label: variable.label,
-          value: variable.name
+          value: variable.id
         }
     });
     const getDomainValueOptions = () => {
-        const variable = variables.find(item => item.name === activeVariable);
+        const variable = variables.find(item => item.id === activeVariable);
         if (!variable)
             return []
-        const domain = domains.find(item => item.name === variable.domain);
+        const domain = domains.find(item => item.id === variable.domainId);
         if (!domain)
             return []
         return domain.domainValues.map(item => {
             return {
                 label: item.label,
-                value: item.value
+                value: item.id
             }
         })
     }
@@ -30,17 +30,17 @@ function RuleOperation(props){
     const [isVariableOpenModal, setIsVariableOpenModal] = React.useState(false);
     const addVariable = (newVariable) => {
         setVariables([...variables, newVariable]);
-        setVariable(newVariable.name);
+        setVariable(newVariable.id);
     }
 
     const [isDomainValueOpenModal, setIsDomainValueOpenModal] = React.useState(false);
     const addDomainValue = (newDomainValue) => {
-        const variable = variables.find(item => item.name === activeVariable);
-        const domainIndex = domains.findIndex(item => item.name === variable.domain);
+        const variable = variables.find(item => item.id === activeVariable);
+        const domainIndex = domains.findIndex(item => item.id === variable.domainId);
         const newDomains = JSON.parse(JSON.stringify(domains));
         newDomains[domainIndex].domainValues.push(newDomainValue)
         setDomains(newDomains)
-        setDomainValue(newDomainValue.value);
+        setDomainValue(newDomainValue.id);
     }
 
     return (
@@ -51,7 +51,7 @@ function RuleOperation(props){
                 <div style={{flex: "1 1 auto", display: "flex", gap: "4px", alignItems: "center"}}>
                     <Select title="Переменная" activeValue={activeVariable} options={variableOptions} setActiveValue={setVariable} addNewElement={() => setIsVariableOpenModal(true)}/>
                     <p style={{width: "16px", height: "16px", borderWidth: "1px", borderStyle: "solid", borderRadius: "4px", backgroundColor: "#1976D2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", margin: "0", fontWeight: "bold", padding: "0 4px"}}>=</p>
-                    <Select title="Значение" activeValue={activeDomainValue} options={domainValueOptions} setActiveValue={activeVariable? setDomainValue: null} addNewElement={() => setIsDomainValueOpenModal(true)}/>
+                    <Select title="Значение" activeValue={activeDomainValue} options={domainValueOptions} setActiveValue={activeVariable !== null? setDomainValue: null} addNewElement={() => setIsDomainValueOpenModal(true)}/>
                 </div>
                 <img style={{cursor: "pointer"}} src="delete.svg" alt="" onClick={handleDelete} />
             </div>            

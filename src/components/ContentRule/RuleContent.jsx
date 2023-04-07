@@ -43,7 +43,7 @@ function RuleContent(props){
         } else {
             const newRule = {name, reason, conditions, result};
             const newRules = JSON.parse(JSON.stringify(rules));
-            newRules[selectedItem] = newRule;
+            newRules[selectedItem] = {...newRules[selectedItem], ...newRule};
             setRules(newRules);
             toast.success(`Правило ${name} было успешно изменено!`);
         }
@@ -73,15 +73,15 @@ function RuleContent(props){
         }
     }
 
-    const setConditionVariable = (variableName, index) => {
+    const setConditionVariable = (variableId, index) => {
         const newConditions = JSON.parse(JSON.stringify(conditions));
-        newConditions[index].variable = variableName;
-        newConditions[index].value = null;
+        newConditions[index].variableId = variableId;
+        newConditions[index].valueId = null;
         setConditions(newConditions);
     }
-    const setConditionValue = (domainValue, index) => {
+    const setConditionValue = (domainValueId, index) => {
         const newConditions = JSON.parse(JSON.stringify(conditions));
-        newConditions[index].value = domainValue;
+        newConditions[index].valueId = domainValueId;
         setConditions(newConditions);
     }
     const deleteCondition = (conditionIndex) => {
@@ -89,20 +89,20 @@ function RuleContent(props){
         setConditions(newConditions);
     }
     const addCondition = () => {
-        setConditions([...conditions, {variable: null, value: null}]);
+        setConditions([...conditions, {variableId: null, valueId: null}]);
     }
 
-    const setResultVariable = (variableName) => {
-        setResult({variable: variableName, value: null});
+    const setResultVariable = (variableId) => {
+        setResult({variableId: variableId, valueId: null});
     }
-    const setResultValue = (domainValue) => {
-        setResult({...result, value: domainValue});
+    const setResultValue = (domainValueId) => {
+        setResult({...result, valueId: domainValueId});
     }
     const deleteResult = () => {
         setResult(null);
     }
     const addResult = () => {
-        setResult({variable: null, value: null});
+        setResult({variableId: null, valueId: null});
     }
 
     const selectRule = (rule) => {
@@ -129,14 +129,14 @@ function RuleContent(props){
                     {
                         conditions.map(
                             (condition, index) => 
-                            <RuleOperation key={index} activeVariable={condition.variable} variables={variables} setVariable={variableName => setConditionVariable(variableName, index)} activeDomainValue={condition.value} domains={domains} setDomainValue={domainValue => setConditionValue(domainValue, index)} handleDelete={() => deleteCondition(index)} setVariables={setVariables} setDomains={setDomains}/>
+                            <RuleOperation key={index} activeVariable={condition.variableId} variables={variables} setVariable={variableId => setConditionVariable(variableId, index)} activeDomainValue={condition.valueId} domains={domains} setDomainValue={domainValueId => setConditionValue(domainValueId, index)} handleDelete={() => deleteCondition(index)} setVariables={setVariables} setDomains={setDomains}/>
                         )
                     }
                 </SimplePanel>
                 <SimplePanel title="Заключение">
                     {
                         result
-                        ? <RuleOperation activeVariable={result.variable} variables={variables} setVariable={variableName => setResultVariable(variableName)} activeDomainValue={result.value} domains={domains} setDomainValue={domainValue => setResultValue(domainValue)} handleDelete={deleteResult} setVariables={setVariables} setDomains={setDomains}/>
+                        ? <RuleOperation activeVariable={result.variableId} variables={variables} setVariable={variableId => setResultVariable(variableId)} activeDomainValue={result.valueId} domains={domains} setDomainValue={domainValueId => setResultValue(domainValueId)} handleDelete={deleteResult} setVariables={setVariables} setDomains={setDomains}/>
                         : <Button title="Создать заключение" handleClick={addResult}/>
                     }
                     

@@ -2,10 +2,10 @@ function RuleItem(props){
     const {item: {name, conditions, result}, variables} = props;
     const conditionLabels = [];
     conditions.forEach(condition => {
-        const conditionVariable = variables.find(variable => variable.name === condition.variable);
+        const conditionVariable = variables.find(variable => variable.id === condition.variableId);
         conditionLabels.push(conditionVariable.label);
     });
-    const resultLabel = variables.find(variable => variable.name === result.variable).label;
+    const resultLabel = variables.find(variable => variable.id === result.variableId).label;
 
     return (
         <>

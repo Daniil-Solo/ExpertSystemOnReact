@@ -67,12 +67,15 @@ function App() {
     newDomains.forEach((newDomain, index) => {
       if (newDomain.id === undefined){
         newDomains[index].id = getNextIdForItems(newDomains);
-        newDomains[index].domainValues.forEach((newDomainValue, innerIndex) => {
-          if (newDomainValue.id === undefined){
-            newDomains[index].domainValues[innerIndex].id = newDomains[index].id + "_" + getNextIdForItems(newDomains[index].domainValues);
-          }
-        })
       }
+      newDomains[index].domainValues.forEach((newDomainValue, innerIndex) => {
+        if (newDomainValue.id === undefined){
+          newDomains[index].domainValues[innerIndex].id = newDomains[index].id + "_" + getNextIdForItems(newDomains[index].domainValues.map(domainValue => {
+              return {id: domainValue.id? +domainValue.id.split("_")[1]: undefined}
+          }));
+        }
+      })
+      
     });
     setExpertSystem({...expertSystem, domains: newDomains});
   }
