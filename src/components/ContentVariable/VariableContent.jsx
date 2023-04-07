@@ -6,11 +6,12 @@ import { toast } from "react-toastify";
 import ItemList from "../ItemList";
 import VariableItem from "./VariableItem";
 import Select from "../UI/Select";
+import NoEditableProperty from "../UI/NoEditableProperty";
 import {VariableTypes} from "../../utils/constants/VariableTypes"
 import DomainModal from "../modals/DomainModal";
 
 function VariableContent(props){
-    const {variables, setVariables, domains, setDomains} = props;
+    const {variables, setVariables, domains, rules, setDomains} = props;
     const [label, setLabel] = React.useState("");
     const [name, setName] = React.useState("");
     const [type, setType] = React.useState(null);
@@ -18,6 +19,7 @@ function VariableContent(props){
 
     const [selectedItem, setSelectedItem] = React.useState(-1);
     const [createMode, setCreateMode] = React.useState(true);
+    const [variableRuleNames, setVariableRuleNames] = React.useState([]);
 
     const clearFields = () => {
         setLabel("");
@@ -78,6 +80,15 @@ function VariableContent(props){
         setName(variable.name);
         setType(variable.type);
         setDomainId(variable.domainId);
+        setVariableRuleNames(rules.map(rule => {
+            const ruleOperations = [rule.result, ...rule.conditions];
+            const ruleOperationVariableIds = ruleOperations.map(ruleOperation => ruleOperation.variableId);
+            if (ruleOperationVariableIds.includes(variable.id)){
+                return rule.name;
+            } else {
+                return null;
+            }
+        }).filter(item => item !== null))
         setCreateMode(false);
     }
 
@@ -109,7 +120,12 @@ function VariableContent(props){
                     <Input title="Короткое название" value={name} changeValue={setName}/>
                     <Select title="Тип" activeValue={type} setActiveValue={setType} options={VariableTypes}/>
                     <Select title="Домен" activeValue={domainId} setActiveValue={setDomainId} options={domainOptions} addNewElement={() => setIsDomainOpenModal(true)}/>
-
+                    {
+                        createMode ||
+                        <SimplePanel title="Где используется">
+                            <NoEditableProperty title="Правила:" value={variableRuleNames.length? variableRuleNames.join(", "): "не используется"}/>
+                        </SimplePanel>
+                    }
                     <div style={{display: "flex", gap: "24px"}}>
                         <Button title={createMode? "Создать": "Сохранить"} buttonType="success" handleClick={saveHandler}/>
                         {
