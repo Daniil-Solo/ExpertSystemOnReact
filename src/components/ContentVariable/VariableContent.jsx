@@ -3,7 +3,7 @@ import Button from "../UI/Button";
 import Input from "../UI/Input";
 import React from "react";
 import { toast } from "react-toastify";
-import ItemList from "../ItemList";
+import ItemList from "../ItemList/ItemList";
 import VariableItem from "./VariableItem";
 import Select from "../UI/Select";
 import NoEditableProperty from "../UI/NoEditableProperty";

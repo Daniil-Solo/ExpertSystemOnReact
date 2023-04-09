@@ -4,7 +4,7 @@ import Input from "../UI/Input";
 import NoEditableProperty from "../UI/NoEditableProperty";
 import React from "react";
 import { toast } from "react-toastify";
-import ItemList from "../ItemList";
+import ItemList from "../ItemList/ItemList";
 import DomainItem from "./DomainItem";
 import DomainValue from "./DomainValue";
 

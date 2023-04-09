@@ -5,7 +5,7 @@ import TextArea from "../UI/TextArea";
 import RuleOperation from "./RuleOperation"
 import React from "react";
 import { toast } from "react-toastify";
-import ItemList from "../ItemList";
+import ItemList from "../ItemList/ItemList";
 import RuleItem from "./RuleItem";
 
 function RuleContent(props){
@@ -106,11 +106,16 @@ function RuleContent(props){
     }
 
     const selectRule = (rule) => {
-        setName(rule.name);
-        setReason(rule.reason);
-        setConditions(rule.conditions);
-        setResult(rule.result);
-        setCreateMode(false);
+        if (rule ===  null){
+            createNewRule();
+        } else{
+            setName(rule.name);
+            setReason(rule.reason);
+            setConditions(rule.conditions);
+            setResult(rule.result);
+            setCreateMode(false);
+        }
+        
     }
 
     return (
@@ -118,7 +123,7 @@ function RuleContent(props){
             <div style={{width: "50%", paddingRight: "12px"}}>
                 <SimplePanel title="Список правил">
                     <Button title="Создать новое правило" handleClick={createNewRule}/>
-                    <ItemList items={rules} selectItem={item => selectRule(item)} SpecificItem={RuleItem} variables={variables} draggable={true} selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
+                    <ItemList items={rules} setItems={setRules} selectItem={item => selectRule(item)} SpecificItem={RuleItem} variables={variables} draggable={true} selectedItem={selectedItem} setSelectedItem={setSelectedItem}/>
                 </SimplePanel>
             </div>
             <div style={{width: "50%", paddingLeft: "12px", display: "flex", flexDirection: "column", gap: "24px"}}>
