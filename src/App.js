@@ -3,10 +3,11 @@ import React from "react";
 import GeneralContent from "./components/ContentGeneral/GeneralContent";
 import RuleContent from "./components/ContentRule/RuleContent";
 import {ExpertSystem} from "./utils/classes/ExpertSystem";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import VariableContent from "./components/ContentVariable/VariableContent";
 import DomainContent from "./components/ContentDomain/DomainContent";
+import {uploadFile, downloadFile} from "./api/expert-system-api"
 
 function App() {
   const expertSystemInstance = new ExpertSystem();
@@ -18,13 +19,21 @@ function App() {
     expertSystemInstance.createKnowledgeBase();
     setExpertSystem(expertSystemInstance.getData());
   }
-  const openHandler = () => {
-    expertSystemInstance.openKnowledgeBase("");
+  const openHandler = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const data = await uploadFile(formData);
+    expertSystemInstance.setData(data);
     setExpertSystem(expertSystemInstance.getData());
   }
-  const saveHandler = () => {
-    expertSystemInstance.setData(expertSystem);
-    expertSystemInstance.saveKnowledgeBase("");
+  const saveHandler = async() => {
+    const data = expertSystemInstance.getSentData(expertSystem)
+    const file = await downloadFile(data);
+    const url = window.URL.createObjectURL(new Blob([file]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "result.rss");
+    link.click();
   }
 
   const getNextIdForItems = (items) => {
