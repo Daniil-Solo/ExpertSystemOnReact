@@ -1,7 +1,8 @@
 import React from "react";
+import FileInput from "../UI/FileInput";
 
 function FileAction(props){
-    const {actions} = props;
+    const {createNewHandler, openHandler, saveHandler} = props;
     const [isOpenedActionList, setIsOpenedActionList] = React.useState(false);
     return(
         <>
@@ -9,14 +10,15 @@ function FileAction(props){
                 <img src="document.svg" alt="Документ" />
                 {isOpenedActionList &&
                     <div style={{position: "absolute", top: "40px", right: "-30px", borderBottomLeftRadius: "4px", borderBottomRightRadius: "4px", borderWidth: "1px", borderTopWidth: "0", borderStyle: "solid", backgroundColor: "#FFFFFF", height: "100px", width: "96px", borderColor: "#E6ECF4", display: "flex", flexDirection: "column", justifyContent: "space-around", zIndex: 3}} onMouseEnter={() => setIsOpenedActionList(true)} onMouseLeave={() => setIsOpenedActionList(false)}>
-                        {
-                            actions.map(
-                                action => 
-                                <p key={action.title} style={{color: "#000", margin: "0", paddingLeft: "8px", fontSize: "16px", cursor: "pointer"}} onClick={action.handler}>
-                                    {action.title}
-                                </p>
-                            )
-                        }
+                        <p style={{margin: "0", paddingLeft: "8px", fontSize: "16px", cursor: "pointer"}} onClick={createNewHandler}>
+                            Создать...
+                        </p>
+                        <div style={{margin: "0", paddingLeft: "8px"}}>
+                            <FileInput title="Открыть..." choiceFile={file => openHandler(file)}/>
+                        </div>
+                        <p style={{margin: "0", paddingLeft: "8px", fontSize: "16px", cursor: "pointer"}} onClick={saveHandler}>
+                            Сохранить...
+                        </p>
                     </div>
                 }
             </div>
