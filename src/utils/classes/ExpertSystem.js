@@ -11,91 +11,6 @@ class ExpertSystem{
         this.knowledgeBase = new KnowledgeBase();
     }
 
-    openKnowledgeBase(filename=""){
-        // api
-        const data = {
-            rules: [
-                {
-                    name: "R1_2",
-                    reason: "Quality of resume's head is low because real name is specified, real contacts are not specified, job is not relevant",
-                    conditions: [
-                        {
-                            variable: "REALNAME",
-                            value: 1
-                        },
-                        {
-                            variable: "JS",
-                            value: 1
-                        }
-                    ],
-                    result: {
-                        variable: "RESUMELVL",
-                        value: 2
-                    }
-                }
-            ],
-            domains: [
-                {
-                    name: "YesNo",
-                    domainValues: [
-                        {
-                            value: 1,
-                            label: "Yes"
-                        },
-                        {
-                            value: 2,
-                            label: "No"
-                        }
-                    ]
-                },
-                {
-                    name: "Level",
-                    domainValues: [
-                        {
-                            value: 1,
-                            label: "Low"
-                        },
-                        {
-                            value: 2,
-                            label: "Middle"
-                        },
-                        {
-                            value: 3,
-                            label: "High"
-                        },
-                    ]
-                },
-            ],
-            variables: [
-                {
-                    name: "REALNAME",
-                    label: "Real name",
-                    domain: "YesNo",
-                    type: "requested"
-                },
-                {
-                    name: "JS",
-                    label: "JavaScript",
-                    domain: "YesNo",
-                    type: "requested"
-                },
-                {
-                    name: "RESUMELVL",
-                    label: "Quality of resume",
-                    domain: "Level",
-                    type: "derived"
-                }
-            ],
-            goal: "REALNAME"
-        }
-        this.setData(data);
-    }
-
-    saveKnowledgeBase(filename=""){
-        alert("Сохраняю");
-        console.log(this.knowledgeBase);
-    }
-
     setData(data){
         this.knowledgeBase = new KnowledgeBase();
         data.domains.forEach(domain => {
@@ -141,6 +56,53 @@ class ExpertSystem{
 
     getData(){
         return this.knowledgeBase.getData();
+    }
+
+    getSentData(expertSystemData){
+        const data = JSON.parse(JSON.stringify(expertSystemData));
+        const variableSet = {};
+        data.variables.forEach(variable => {
+            variableSet[variable.id] = variable.name;
+        });
+        const domainSet = {};
+        data.domains.forEach(domain => {
+            domainSet[domain.id] = domain.name;
+        });
+        const domainValueSet = {};
+        data.domains.forEach(domain => {
+            domain.domainValues.forEach(domainValue => {
+                domainValueSet[domainValue.id] = domainValue.value;
+            })
+        });
+        return {
+            rules: data.rules.map(rule => {
+                rule.conditions.forEach((condition, idx) => {
+                    rule.conditions[idx].variable = variableSet[condition.variableId];
+                    rule.conditions[idx].value = domainValueSet[condition.valueId];
+                    delete condition.variableId;
+                    delete condition.valueId;
+                })
+                rule.result.variable = variableSet[rule.result.variableId];
+                rule.result.value = domainValueSet[rule.result.valueId];
+                delete rule.result.variableId;
+                delete rule.result.valueId;
+                return rule;
+            }),
+            domains: data.domains.map(domain => {
+                delete domain.id;
+                domain.domainValues.forEach(domainValue => {
+                    delete domainValue.id;
+                })
+                return domain;
+            }),
+            variables: data.variables.map(variable => {
+                delete variable.id;
+                variable.domain = domainSet[variable.domainId];
+                delete variable.domainId;
+                return variable;
+            }),
+            goal:  variableSet[data.goalId]
+        }
     }
 }
 
