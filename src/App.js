@@ -27,6 +27,16 @@ function App() {
     setExpertSystem(expertSystemInstance.getData());
   }
   const saveHandler = async() => {
+    if (expertSystem.variables.length === 0){
+      toast.error("База знаний не может быть сохранена без переменных!");
+      return;
+    } else if (expertSystem.goal === null){
+      toast.error("База знаний не может быть сохранена без заданной цели!");
+      return;
+    } else if (expertSystem.rules.length === null){
+      toast.error("База знаний не может быть сохранена без правил!");
+      return;
+    }
     const data = expertSystemInstance.getSentData(expertSystem)
     const file = await downloadFile(data);
     const url = window.URL.createObjectURL(new Blob([file]));
