@@ -3,7 +3,7 @@ function FileInput(props){
 
     return(
         <>
-            <input id="upload-file" type="file" style={{opacity: "0", position: "absolute", zIndex: "-1"}} onChange={e => choiceFile(e.target.files[0])}/>
+            <input id="upload-file" type="file" style={{width: "calc(100% - 8px)", opacity: "0", position: "absolute", zIndex: "-1"}} onChange={e => choiceFile(e.target.files[0])}/>
             <label htmlFor="upload-file" style={{ backgroundColor: "#FFFFFF", color: "#000000", fontSize: "16px", cursor: "pointer"}}>
                 {title}
             </label>

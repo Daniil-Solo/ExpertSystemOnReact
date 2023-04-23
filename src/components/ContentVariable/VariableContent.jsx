@@ -112,7 +112,7 @@ function VariableContent(props){
     return (
         <>
             <DomainModal isActive={isDomainOpenModal} setIsActive={setIsDomainOpenModal} addDomain={addDomain}/>
-            <div style={{width: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
+            <div style={{maxWidth: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
                 <div style={{width: "50%", paddingRight: "12px"}}>
                     <SimplePanel title="Список переменных">
                         <Button title="Создать новую переменную" handleClick={createNewVariable}/>

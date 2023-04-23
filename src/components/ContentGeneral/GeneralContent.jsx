@@ -20,7 +20,7 @@ function GeneralContent(props) {
   return (
     <>
       <VariableModal domains={domains} setDomains={setDomains} isActive={isVariableOpenModal} setIsActive={setIsVariableOpenModal} addVariable={addVariable}/>
-      <div style={{width: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
+      <div style={{maxWidth: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
         <div style={{width: "50%", paddingRight: "12px"}}>
             <SimplePanel title="Текущий проект">
                 <Select title="Цель" activeValue={goal} options={getGoalOptions} setActiveValue={setGoal} addNewElement={() => setIsVariableOpenModal(true)}/>

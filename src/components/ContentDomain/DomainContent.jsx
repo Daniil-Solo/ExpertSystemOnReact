@@ -105,7 +105,7 @@ function DomainContent(props){
     }
 
     return (
-        <div style={{width: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
+        <div style={{maxWidth: "878px", margin: "40px auto 0", display: "flex", justifyContent: "space-around", alignItems: "flex-start"}}>
             <div style={{width: "50%", paddingRight: "12px"}}>
                 <SimplePanel title="Список доменов">
                     <Button title="Создать новый домен" handleClick={createNewDomain}/>
