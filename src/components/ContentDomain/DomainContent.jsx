@@ -44,7 +44,7 @@ function DomainContent(props){
         }
     }
     const deleteHandler = () => {
-        if (variables.map(variable => variable.label).length){
+        if (variables.filter(variable => variable.domainId === domains[selectedItem].id).length){
             toast.error("Домен используется для переменной!");
         } else {
             setDomains([...domains.slice(0, selectedItem), ...domains.slice(selectedItem+1)]);
@@ -126,7 +126,7 @@ function DomainContent(props){
                 {
                     createMode ||
                     <SimplePanel title="Где используется">
-                        <NoEditableProperty title="Переменные:" value={variables.map(variable => variable.label).join(", ")}/>
+                        <NoEditableProperty title="Переменные:" value={variables.filter(variable => variable.domainId === domains[selectedItem].id).map(variable => variable.label).join(", ") || "не используется"}/>
                         {
                             domainValues.map((domainValue, index) => (
                                 <NoEditableProperty key={index} title={"Значение \"" + domainValue.label + "\":"} value={domainValue.rules !== undefined && domainValue.rules.length? domainValue.rules.join(", "): "не используется"}/>
