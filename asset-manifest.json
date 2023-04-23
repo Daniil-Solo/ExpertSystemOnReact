@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/ExpertSystemOnReact/static/css/main.e27ac7fd.css",
-    "main.js": "/ExpertSystemOnReact/static/js/main.fdf33296.js",
+    "main.js": "/ExpertSystemOnReact/static/js/main.1b6ab636.js",
     "index.html": "/ExpertSystemOnReact/index.html",
     "main.e27ac7fd.css.map": "/ExpertSystemOnReact/static/css/main.e27ac7fd.css.map",
-    "main.fdf33296.js.map": "/ExpertSystemOnReact/static/js/main.fdf33296.js.map"
+    "main.1b6ab636.js.map": "/ExpertSystemOnReact/static/js/main.1b6ab636.js.map"
   },
   "entrypoints": [
     "static/css/main.e27ac7fd.css",
-    "static/js/main.fdf33296.js"
+    "static/js/main.1b6ab636.js"
   ]
 }
