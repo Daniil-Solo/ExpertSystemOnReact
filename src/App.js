@@ -22,9 +22,13 @@ function App() {
   const openHandler = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    const data = await uploadFile(formData);
-    expertSystemInstance.setData(data);
-    setExpertSystem(expertSystemInstance.getData());
+    try {
+      const data = await uploadFile(formData);
+      expertSystemInstance.setData(data);
+      setExpertSystem(expertSystemInstance.getData());
+    } catch (error) {
+      toast.error("Сервер недоступен!");
+    }
   }
   const saveHandler = async() => {
     if (expertSystem.variables.length === 0){
@@ -38,12 +42,16 @@ function App() {
       return;
     }
     const data = expertSystemInstance.getSentData(expertSystem)
-    const file = await downloadFile(data);
-    const url = window.URL.createObjectURL(new Blob([file]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "result.rss");
-    link.click();
+    try {
+      const file = await downloadFile(data);
+      const url = window.URL.createObjectURL(new Blob([file]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "result.rss");
+      link.click();
+    } catch (error) {
+      toast.error("Сервер недоступен!");
+    }
   }
 
   const getNextIdForItems = (items) => {
